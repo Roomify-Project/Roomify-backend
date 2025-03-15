@@ -9,10 +9,10 @@ using Roomify.GP.Repository.Data.Contexts;
 
 #nullable disable
 
-namespace Roomify.GP.Repository.Data.Migrations
+namespace Roomify.GP.Repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250311182613_InitialCreate")]
+    [Migration("20250315010905_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,7 +27,7 @@ namespace Roomify.GP.Repository.Data.Migrations
 
             modelBuilder.Entity("Roomify.GP.Core.Entities.User", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -50,8 +50,17 @@ namespace Roomify.GP.Repository.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PictureUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ProfilePicture")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Provider")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProviderId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Role")
@@ -59,10 +68,9 @@ namespace Roomify.GP.Repository.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });

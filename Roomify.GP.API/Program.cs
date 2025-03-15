@@ -7,6 +7,7 @@ using Roomify.GP.Service.Mappings;
 using Roomify.GP.Repository.Data.Contexts;
 using Roomify.GP.Core.Service.Contract;
 using Roomify.GP.Service.Helpers;
+using Roomify.GP.Core.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,12 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepository>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+
 
 // Load appsettings.Local.json if exists
 

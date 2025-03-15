@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Roomify.GP.Core.DTOs.User;
 
 using Roomify.GP.Core.Service.Contract;
+using Microsoft.AspNetCore.Identity.Data;
 
 
 
@@ -31,11 +32,7 @@ namespace Roomify.GP.API.Controllers
 
 
 
-        public AuthController(IUserService userService, IUserRepository userRepository)
-        {
-            _userService = userService;
-            _userRepository = userRepository;
-        }
+      
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserCreateDto userDto)
@@ -85,6 +82,21 @@ namespace Roomify.GP.API.Controllers
             };
 
             return Ok(response);
+        }
+
+
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgetPasswordRequest request)
+        {
+            await _authService.ForgetPasswordAsync(request);
+            return Ok(new { message = "Reset link sent to email successfully." });
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+        {
+            await _authService.ResetPasswordAsync(request);
+            return Ok(new { message = "Password reset successfully." });
         }
 
     }
