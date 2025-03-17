@@ -2,7 +2,6 @@
 using Microsoft.IdentityModel.Tokens;
 using Roomify.GP.Core.Entities;
 using Roomify.GP.Core.Service.Contract;
-using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -19,9 +18,6 @@ namespace Roomify.GP.Service.Helpers
         }
 
 
-
-
-
         public string GenerateToken(User user)
         {
             var secretKey = _configuration["JwtSettings:Secret"];
@@ -33,7 +29,7 @@ namespace Roomify.GP.Service.Helpers
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName ?? user.FullName ?? ""),
                 new Claim(ClaimTypes.Email, user.Email ?? ""),
-                new Claim(ClaimTypes.Role, user.Role ?? "User")
+                new Claim(ClaimTypes.Role, user.Roles.ToString())
             };
 
             var tokenDescriptor = new SecurityTokenDescriptor

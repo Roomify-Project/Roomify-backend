@@ -35,6 +35,15 @@ namespace Roomify.GP.Service.Services
 
         public async Task<UserResponseDto> CreateUserAsync(UserCreateDto userDto)
         {
+            // Check if email already exists
+            var existingUser = await _userRepository.GetUserByEmailAsync(userDto.Email);
+            if (existingUser != null)
+            {
+                // Return null or throw an exception 
+                throw new Exception("This email is already registered.");
+            }
+
+            // Proceed to create user
             var user = _mapper.Map<User>(userDto);
             user.Password = PasswordHasher.HashPassword(user.Password);
             await _userRepository.AddUserAsync(user);

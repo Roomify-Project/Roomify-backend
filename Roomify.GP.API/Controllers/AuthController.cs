@@ -3,18 +3,16 @@ using Roomify.GP.Core.DTOs.User;
 using Roomify.GP.Core.Repositories.Contract;
 using Roomify.GP.Core.Services.Contract;
 using Roomify.GP.Service.Helpers;
-using System.Threading.Tasks;
-using Roomify.GP.Core.DTOs.User;
+
 
 using Roomify.GP.Core.Service.Contract;
-using Microsoft.AspNetCore.Identity.Data;
 
 
 
 namespace Roomify.GP.API.Controllers
 {
     [ApiController]
-    [Route("api/auth")]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -41,6 +39,7 @@ namespace Roomify.GP.API.Controllers
             return Ok(user);
         }
 
+
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto loginDto)
         {
@@ -56,12 +55,13 @@ namespace Roomify.GP.API.Controllers
             {
                 Token = token,
                 UserName = user.UserName,
-                Role = user.Role
+                Roles = user.Roles.ToString()
             };
 
             return Ok(response);
         }
       
+
         [HttpPost("google-login")]
         public async Task<IActionResult> GoogleLogin([FromBody] ExternalAuthDto externalAuth)
         {
@@ -77,7 +77,7 @@ namespace Roomify.GP.API.Controllers
             var response = new LoginResponseDto
             {
                 UserName = user.UserName,
-                Role = user.Role,
+                Roles = user.Roles.ToString(),
                 Token = token
             };
 
@@ -91,6 +91,7 @@ namespace Roomify.GP.API.Controllers
             await _authService.ForgetPasswordAsync(request);
             return Ok(new { message = "Reset link sent to email successfully." });
         }
+
 
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)

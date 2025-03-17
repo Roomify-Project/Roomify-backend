@@ -12,7 +12,7 @@ namespace Roomify.GP.Core.Repositories.Contract
         Task AddUserAsync(User user);
         Task UpdateUserAsync(User user);
         Task DeleteUserAsync(Guid id);
-        Task<bool> UserExistsAsync(Guid id);
+        Task<bool> UserExistsAsync(Guid? id);
         Task<User> GetUserByEmailAsync(string email);
    
     }
