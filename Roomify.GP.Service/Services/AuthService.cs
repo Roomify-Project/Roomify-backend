@@ -50,7 +50,7 @@ namespace Roomify.GP.Service.Services
                         FullName = payload.Name,
                         Provider = "Google",
                         ProviderId = payload.Subject,
-                        PictureUrl = payload.Picture
+                        ProfilePicture = payload.Picture
                     };
 
                     await _userRepository.AddUserAsync(user);
